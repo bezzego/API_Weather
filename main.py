@@ -1,16 +1,27 @@
 import requests
+from urllib.parse import urlencode
 
-cities = ["london", "moscow", "cherepovets"]
 
-for city in cities:
-
-    url = f"https://wttr.in/{city}?nTqm&lang=ru"
-
+def fetch_weather(city):
+    params = {
+        "n": "",
+        "T": "",
+        "q": "",
+        "m": "",
+        "lang": "ru",
+    }
+    query_string = urlencode(params)
+    url = f"https://wttr.in/{city}?{query_string}"
     response = requests.get(url)
     response.raise_for_status()
+    return response.text
 
-    filename = f"weather_{city}.txt"
-    with open(filename, "wb") as file:
-        file.write(response.content)
 
-    print(response.text)
+def main():
+    cities = ["london", "moscow", "cherepovets"]
+    for city in cities:
+        print(fetch_weather(city))
+
+
+if __name__ == "__main__":
+    main()
