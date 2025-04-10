@@ -10,9 +10,8 @@ def fetch_weather(city):
         "m": "",
         "lang": "ru",
     }
-    query_string = urlencode(params)
-    url = f"https://wttr.in/{city}?{query_string}"
-    response = requests.get(url)
+    url = f"https://wttr.in/{city}"
+    response = requests.get(url, params=params)
     response.raise_for_status()
     return response.text
 
